@@ -8,6 +8,7 @@ class test_write_file(unittest.TestCase):
         content = "wait, this isn't lorem ipsum"
         result = write_file(working_dir, file_path, content)
         expected_msg = utils.success_message_WRITE(file_path, content)
+        print(result)
         self.assertEqual(result, expected_msg)
 
     def test_file_subdir_message(self):
@@ -15,6 +16,7 @@ class test_write_file(unittest.TestCase):
         content = "lorem ipsum dolor sit amet"
         result = write_file(working_dir, file_path, content)
         expected_msg = utils.success_message_WRITE(file_path, content)
+        print(result)
         self.assertEqual(result, expected_msg)
 
     def test_file_no_auth_message(self):
@@ -22,6 +24,7 @@ class test_write_file(unittest.TestCase):
         content = "this should not be allowed"
         result = write_file(working_dir, file_path, content)
         expected_msg_header = utils.write_fail_message_to_append()
+        print(result)
         self.assertEqual(result[-len(expected_msg_header):], expected_msg_header)
 
 if __name__ == "__main__":
