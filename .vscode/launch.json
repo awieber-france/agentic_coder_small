@@ -1,0 +1,64 @@
+{
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debugger for main.py cli input",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": ["Why are episodes 7-9 so much worse than 1-6? Use one paragraph.", "--verbose"]
+        },
+        {
+            "name": "Debugger for get_target_path.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/functions/get_target_path.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "args": ["True"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Debugger for get_files_info.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/functions/get_files_info.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "args": ["True"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Debugger for get_file_content.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/functions/get_file_content.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "args": ["True"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Debugger for write_file.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/functions/write_file.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "args": ["True"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        }
+    ]
+}
