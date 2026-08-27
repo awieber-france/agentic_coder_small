@@ -48,16 +48,18 @@ def write_fail_message_to_append():
 
 #SUCCESS messages (templates)
 def success_message_with_header_DIR(target: str, content: str):
-    header = header_template_DIR.format(target_directory=target)
+    target_sanitized = sanitize_exception(target, BASE_DIR)
+    header = header_template_DIR.format(target_directory=target_sanitized)
     return f'{header}{content}'
 
 def success_message_with_header_FILE(target:str, content: str):
-    header = header_template_FILE.format(target_directory=target)
+    target_sanitized = sanitize_exception(target, BASE_DIR)
+    header = header_template_FILE.format(target_directory=target_sanitized)
     return f'{header}{content}'
 
-def success_message_with_header_WRITE(target: str, content: str):
-    header = header_template_FILE.format(target_directory=target)
-    return f'{header}Successfully wrote to "{target}" ({len(content)} characters written)'
+def success_message_WRITE(target: str, content: str):
+    target_sanitized = sanitize_exception(target, BASE_DIR)
+    return f'Success: Successfully wrote to "{target_sanitized}" ({len(content)} characters written)'
 
 #TRUNCATE string (truncates read output when too long)
 def truncate_message(target: str, chars: int = MAX_CHARS):
@@ -102,4 +104,7 @@ def error_message_not_file(target: str):
 
 def error_message_overwrite_dir(target: str):
     header = header_template_DIR.format(target_directory=target)
-    return f'{header}  Error: Cannot write to "{target}" as it is an existing directory (overwrite of directories not authorized)' 
+    return f'{header}  Error: Cannot write to "{target}" as it is an existing directory (overwrite of directories not authorized)'
+
+def error_message_bad_file(target: str):
+    return error_message_generic(target) + write_fail_message_to_append()
