@@ -5,7 +5,9 @@ READ_PERMITTED_DIR = "calculator"
 WRITE_PERMITTED_DIR = "calculator"
 FORBIDDEN_READ_PATHS = []
 FORBIDDEN_WRITE_PATHS = ["functions", ".vscode", ".venv", "__pycache__"]
+PERMITTED_FILE_TYPES = [".py"]
 MAX_CHARS = 10000
+SUBPROC_TIMEOUT = 30 #in seconds
 
 
 HEADER_DIR_RESULT = "Results for '{working_directory}' directory:\n"

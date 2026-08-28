@@ -1,4 +1,4 @@
-from config import HEADER_DIR_RESULT, HEADER_FILE_RESULT, MAX_CHARS, BASE_DIR
+from config import HEADER_DIR_RESULT, HEADER_FILE_RESULT, MAX_CHARS, BASE_DIR, PERMITTED_FILE_TYPES
 from pathlib import Path
 
 def sanitize_exception(exc: Exception, workspace_root: str | Path) -> str:
@@ -102,9 +102,22 @@ def error_message_not_file(target: str):
     header = header_template_DIR.format(target_directory=target)
     return f'{header}  Error: "{target}" is not a file'
 
-def error_message_overwrite_dir(target: str):
+def error_message_write_dir_not_allowed(target: str):
     header = header_template_DIR.format(target_directory=target)
-    return f'{header}  Error: Cannot write to "{target}" as it is an existing directory (overwrite of directories not authorized)'
+    return f'{header}  Error: Cannot write "{target}" as writing of directories is not permitted'
 
-def error_message_bad_file(target: str):
+def error_message_write_fail(target: str):
     return error_message_generic(target) + write_fail_message_to_append()
+
+def error_message_write_parent_dir_missing(target: str):
+    return f'Error: "{target}" parent directory does not exits - only regular files may be written'
+
+def error_message_write_not_regular_file(target: str):
+    return f'Error: "existing {target}" is not a regular file'
+
+def error_message_execute_filetype_invalid(target: str):
+    #return f'Error: "{target}" is not a a permitted file type - accepted file types are {PERMITTED_FILE_TYPES}'
+    return f'Error: "{target}" is not a Python file'
+
+def error_message_execute_file_not_exist(target):
+    return f'Error: execution of "{target}" impossible as it does not exist'

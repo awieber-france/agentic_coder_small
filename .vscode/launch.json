@@ -59,6 +59,18 @@
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"
             }
+        },
+        {
+            "name": "Debugger for run_python_file.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/functions/run_python_file.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "args": ["True"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
         }
     ]
 }

@@ -63,7 +63,7 @@ class testTargetDir(unittest.TestCase):
     def test_overwrite_existing_1(self):
         working_directory = "calculator"
         directory = "pkg"
-        expected_error_msg = utils.error_message_overwrite_dir(directory)
+        expected_error_msg = utils.error_message_write_dir_not_allowed(directory)
         result = get_target_path_WRITE_secure(working_directory, directory)
         self.assertTrue(result == expected_error_msg)
 
@@ -71,7 +71,7 @@ class testTargetDir(unittest.TestCase):
     def test_overwrite_existing_2(self):
         working_directory = "calculator"
         directory = "pkg"
-        expected_error_msg = utils.error_message_overwrite_dir(directory)
+        expected_error_msg = utils.error_message_write_dir_not_allowed(directory)
         result = get_target_path_WRITE_secure(working_directory, directory)
         self.assertTrue(result == expected_error_msg)
 

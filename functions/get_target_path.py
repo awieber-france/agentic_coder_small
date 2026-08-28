@@ -1,7 +1,8 @@
 from pathlib import Path
 import utils
 import sys
-from config import BASE_DIR
+import stat
+from config import BASE_DIR, PERMITTED_FILE_TYPES
 from get_sandboxed_path import get_sandboxed_READ_path, get_sandboxed_WRITE_path
 
 def get_target_path_READ_secure(working_directory: Path | str, directory: str = ".") -> Path | str:
@@ -37,9 +38,18 @@ def _get_target_path_with_permission_check(working_directory: Path | str, direct
         #Check if declared working directory is coherent with final target path
         if not target_path.is_relative_to(workspace):
             return utils.error_message_outside_working_dir(directory)
-        #Prevent overwriting of existing directory
+        #Only allow writing regular files (not directories or other types of files):
         if write and target_path.is_dir():
-            return utils.error_message_overwrite_dir(directory)
+            return utils.error_message_write_dir_not_allowed(directory)
+        if write and not target_path.parent.is_dir():
+            return utils.error_message_write_parent_dir_missing(directory)
+        if write and target_path.exists():
+            mode = target_path.stat().st_mode
+            if not stat.S_ISREG(mode):
+                return utils.error_message_write_not_regular_file(directory)
+        #Allow only specific filetypes
+        if write and target_path.suffix not in PERMITTED_FILE_TYPES:
+            return utils.error_message_execute_filetype_invalid(directory)
     except Exception as e:
         return utils.error_message_generic_with_header(directory, e) # the error generator sanitizes the exception
     return target_path
