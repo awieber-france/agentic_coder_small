@@ -2,7 +2,7 @@ from pathlib import Path
 import utils
 import sys
 import stat
-from config import BASE_DIR, PERMITTED_FILE_TYPES
+from config import WRITE_PERMITTED_FILE_TYPES, EXECUTE_PERMITTED_FILE_TYPES
 from get_sandboxed_path import get_sandboxed_READ_path, get_sandboxed_WRITE_path
 
 def get_target_path_READ_secure(working_directory: Path | str, directory: str = ".") -> Path | str:
@@ -11,7 +11,10 @@ def get_target_path_READ_secure(working_directory: Path | str, directory: str = 
 def get_target_path_WRITE_secure(working_directory: Path | str, directory: str = ".") -> Path | str:
     return _get_target_path_with_permission_check(working_directory, directory, write=True)
 
-def _get_target_path_with_permission_check(working_directory: Path | str, directory: str = ".", write: bool = False) -> Path | str:
+def get_target_path_EXECUTE_secure(working_directory: Path | str, directory: str = ".") -> Path | str:
+    return _get_target_path_with_permission_check(working_directory, directory, write=True, execute=True)
+
+def _get_target_path_with_permission_check(working_directory: Path | str, directory: str = ".", write: bool = False, execute: bool = False) -> Path | str:
     """
     Returns a Path object for target_path (if authorized)
     Works for directories and files
@@ -48,7 +51,9 @@ def _get_target_path_with_permission_check(working_directory: Path | str, direct
             if not stat.S_ISREG(mode):
                 return utils.error_message_write_not_regular_file(directory)
         #Allow only specific filetypes
-        if write and target_path.suffix not in PERMITTED_FILE_TYPES:
+        if write and target_path.suffix not in WRITE_PERMITTED_FILE_TYPES:
+            return utils.error_message_execute_filetype_invalid(directory)
+        if execute and target_path.suffix not in EXECUTE_PERMITTED_FILE_TYPES:
             return utils.error_message_execute_filetype_invalid(directory)
     except Exception as e:
         return utils.error_message_generic_with_header(directory, e) # the error generator sanitizes the exception

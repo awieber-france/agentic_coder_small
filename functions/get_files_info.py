@@ -1,9 +1,26 @@
 import sys
 from pathlib import Path
 import utils
-from config import BASE_DIR
 from functions.get_target_path import get_target_path_READ_secure
 from get_sandboxed_path import get_sandboxed_READ_path
+
+#LLM schema - the undeclared working_directory parameter is reserved for the programmer
+schema_get_files_info = {
+    "type": "function",
+    "function": {
+        "name": "get_files_info",
+        "description": "Lists files in a specified directory relative to the working directory, providing file size and directory status",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "directory": {
+                    "type": "string",
+                    "description": "Directory path to list files from, relative to the working directory (default is the working directory itself)",
+                },
+            },
+        },
+    },
+}
 
 # Collect information on files withing the target directory (name, size, is_dir)
 def get_files_info(working_directory: str | Path, directory: str = ".") -> str:

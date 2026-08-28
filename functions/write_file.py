@@ -4,6 +4,28 @@ from get_sandboxed_path import get_sandboxed_WRITE_path, _get_sandboxed_BASE_pat
 import utils
 import sys
 
+#LLM schema - the undeclared working_directory parameter is reserved for the programmer
+schema_write_file = {
+    "type": "function",
+    "function": {
+        "name": "write_file",
+        "description": "Writes (or overwrites) a regular file within the working directory",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Path to the python script to run via a subprocess, relative to the working directory (default is the working directory itself)",
+                },
+                "content": {
+                    "type": "string",
+                    "description": "The content to write into the file at file_path",
+                },
+            },
+        },
+    },
+}
+
 def write_file(working_directory: str, file_path: str, content: str) -> str:
     # WRITE PRIVELEDGES
     target_path = get_target_path_WRITE_secure(working_directory, file_path)

@@ -5,7 +5,8 @@ READ_PERMITTED_DIR = "calculator"
 WRITE_PERMITTED_DIR = "calculator"
 FORBIDDEN_READ_PATHS = []
 FORBIDDEN_WRITE_PATHS = ["functions", ".vscode", ".venv", "__pycache__"]
-PERMITTED_FILE_TYPES = [".py"]
+WRITE_PERMITTED_FILE_TYPES = [".txt", ".py", ".md"]
+EXECUTE_PERMITTED_FILE_TYPES = [".py"]
 MAX_CHARS = 10000
 SUBPROC_TIMEOUT = 30 #in seconds
 

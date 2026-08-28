@@ -1,8 +1,30 @@
 import sys
 from pathlib import Path
 import utils
-from config import MAX_CHARS, BASE_DIR
+from config import MAX_CHARS
 from functions.get_target_path import get_target_path_READ_secure
+
+#LLM schema - the undeclared working_directory parameter is reserved for the programmer
+schema_get_file_content = {
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": "Retrieves content of a regular file within the working directory",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Path to the file for which to get the contents, relative to the working directory (default is the working directory itself)",
+                },
+                "MAX_CHARS": {
+                    "type": "integer",
+                    "description": f"Maximum number of characters to retrieve from the file before truncating (default is {MAX_CHARS})",
+                },
+            },
+        },
+    },
+}
 
 def get_file_content(working_directory: str, file_path: str, MAX_CHARS: int = MAX_CHARS) -> str:
     # READ ONLY PRIVELEDGES

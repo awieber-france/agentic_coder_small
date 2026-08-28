@@ -3,13 +3,35 @@ from config import SUBPROC_TIMEOUT
 from pathlib import Path
 import subprocess
 import sys
-from functions.get_target_path import get_target_path_READ_secure, get_target_path_WRITE_secure
+from functions.get_target_path import get_target_path_EXECUTE_secure
+
+#LLM schema - the undeclared working_directory parameter is reserved for the programmer
+schema_run_python_file = {
+    "type": "function",
+    "function": {
+        "name": "run_python_file",
+        "description": "Allows execution of a python script within the working directory via a subprocess",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Path to the python script to run via a subprocess, relative to the working directory (default is the working directory itself)",
+                },
+                "args": {
+                    "type": "list[string]",
+                    "description": "Additional arguments to be used in the the python script at file_path",
+                },
+            },
+        },
+    },
+}
 
 #Executing a file requires write priveledges
 def run_python_file(working_directory: str, file_path: str, args: list[str] | None = None) -> str:
     try:
         #Get target path checked for permissions
-        target_path = get_target_path_WRITE_secure(working_directory, file_path)
+        target_path = get_target_path_EXECUTE_secure(working_directory, file_path)
         # If text, then it is an error message
         if isinstance(target_path, str):
             return utils.error_message_generic(target_path)

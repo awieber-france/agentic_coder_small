@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
-            "args": ["Why are episodes 7-9 so much worse than 1-6? Use one paragraph.", "--verbose"]
+            "args": ["use write_file to create a new README.md file with the contents '# calculator'", "--verbose"]
         },
         {
             "name": "Debugger for get_target_path.py",

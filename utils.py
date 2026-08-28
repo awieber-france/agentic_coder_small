@@ -1,4 +1,4 @@
-from config import HEADER_DIR_RESULT, HEADER_FILE_RESULT, MAX_CHARS, BASE_DIR, PERMITTED_FILE_TYPES
+from config import HEADER_DIR_RESULT, HEADER_FILE_RESULT, MAX_CHARS, BASE_DIR, WRITE_PERMITTED_FILE_TYPES
 from pathlib import Path
 
 def sanitize_exception(exc: Exception, workspace_root: str | Path) -> str:
@@ -114,6 +114,9 @@ def error_message_write_parent_dir_missing(target: str):
 
 def error_message_write_not_regular_file(target: str):
     return f'Error: "existing {target}" is not a regular file'
+
+def error_message_write_filetype_invalid(target: str):
+    return f'Error: "{target}" is not a a permitted file type for write actions - accepted file types are {WRITE_PERMITTED_FILE_TYPES}'
 
 def error_message_execute_filetype_invalid(target: str):
     #return f'Error: "{target}" is not a a permitted file type - accepted file types are {PERMITTED_FILE_TYPES}'
