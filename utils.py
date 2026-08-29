@@ -1,5 +1,8 @@
-from config import HEADER_DIR_RESULT, HEADER_FILE_RESULT, MAX_CHARS, BASE_DIR, WRITE_PERMITTED_FILE_TYPES
+from config import MAX_CHARS, BASE_DIR, WRITE_PERMITTED_FILE_TYPES
 from pathlib import Path
+
+HEADER_DIR_RESULT = "Results for '{working_directory}' directory:\n"
+HEADER_FILE_RESULT = "Contents of file '{file_path}':\n"
 
 def sanitize_exception(exc: Exception, workspace_root: str | Path) -> str:
     """Replaces absolute workspace path in exception strings with relative paths."""

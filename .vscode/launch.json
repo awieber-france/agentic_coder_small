@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
-            "args": ["use write_file to create a new README.md file with the contents '# calculator'", "--verbose"]
+            "args": ["how does the calculator render results to the console?", "--verbose"]
         },
         {
             "name": "Debugger for get_target_path.py",
