@@ -9,13 +9,13 @@ schema_get_file_content = {
     "type": "function",
     "function": {
         "name": "get_file_content",
-        "description": "Retrieves content of a regular file within the working directory",
+        "description": "Reads a file within the working directory, if it is a regular file",
         "parameters": {
             "type": "object",
             "properties": {
                 "file_path": {
                     "type": "string",
-                    "description": "Path to the file for which to get the contents, relative to the working directory (default is the working directory itself)",
+                    "description": "Path to the file for which to read the contents, relative to the working directory (default is the working directory itself)",
                 },
                 "MAX_CHARS": {
                     "type": "integer",

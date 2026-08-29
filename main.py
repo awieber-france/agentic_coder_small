@@ -65,7 +65,12 @@ def generate_content(client: OpenAI, messages: list, verbose: bool, temperature:
             tools=available_functions,
         )
     if not response.usage:
-        raise RuntimeError("API response appears to be malformed.")
+        api_fail_message = {"role": "API", "content": "The API response appears to be malformed. Please try again."}
+        messages.append(api_fail_message)
+        if verbose:
+            print(f'Error: {api_fail_message["content"]}')
+        return messages, job_done
+        #raise RuntimeError("API response appears to be malformed.")
     message = response.choices[0].message
     if message.content is not None:
         messages.append({"role": "assistant", "content": message.content})

@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
-            "args": ["how does the calculator render results to the console?", "--verbose"]
+            "args": ["The calculator gives an answer of 20 for the equation y = 3 + 7 * 2. This is wrong. I need you to diagnose the problem and fix it (you are my automated assistant!)", "--verbose"]
         },
         {
             "name": "Debugger for get_target_path.py",
