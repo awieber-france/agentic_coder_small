@@ -68,13 +68,14 @@ def run_python_file(working_directory: str, file_path: str, args: list[str] | No
 
 if __name__ == "__main__":
     #All cases to test:
-    arg_combos = [["calculator", "main.py"],
-                  ["calculator", "main.py", ["3 + 5"]],
-                  ["calculator", "tests.py"],
-                  ["calculator", "../main.py"],
-                  ["calculator", "nonexistent.py"],
-                  ["calculator", "lorem.txt"]
-                  ]
+    arg_combos = [["calculator", "tests.py"],
+                ["calculator", "main.py"],
+                ["calculator", "main.py", ["3 + 5"]],
+                ["calculator", "tests.py"],
+                ["calculator", "../main.py"],
+                ["calculator", "nonexistent.py"],
+                ["calculator", "lorem.txt"]
+                ]
 
     #Get raw string argument from launch.json debugger
     raw_arg = sys.argv[1] if len(sys.argv) > 1 else "False"

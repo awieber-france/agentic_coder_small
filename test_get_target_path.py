@@ -55,32 +55,47 @@ class testTargetDir(unittest.TestCase):
     #Valid path 1 (directory)
     def test_write_valid(self):
         working_directory = "calculator"
-        directory = "main.py"
-        result = get_target_path_WRITE_secure(working_directory, directory)
+        file_name = "main.py"
+        result = get_target_path_WRITE_secure(working_directory, file_name)
         self.assertIsInstance(result, Path)
 
-    #Overwrite existing directory 1
+    #Valid path 2 (file)
+    def test_write_valid_subdir(self):
+        working_directory = "calculator"
+        file_name = "/pkg/calculator.py"
+        result = get_target_path_WRITE_secure(working_directory, file_name)
+        self.assertIsInstance(result, Path)
+
+    #Valid path 3 (file)
+    def test_write_valid_subdir(self):
+        working_directory = "calculator"
+        file_name = "pkg/calculator.py"
+        result = get_target_path_WRITE_secure(working_directory, file_name)
+        self.assertIsInstance(result, Path)
+
+    #Invalid filetype for new file
+    def test_create_invalid_filetype(self):
+        working_directory = "calculator"
+        file_name = "majestic_composter.py"
+        expected_error_msg = utils.error_message_create_filetype_invalid(file_name)
+        result = get_target_path_WRITE_secure(working_directory, file_name)
+        self.assertTrue(result == expected_error_msg)
+
+    #Invalid filetype for overwrite
+    def test_overwrite_invalid_filetype(self):
+        working_directory = "calculator"
+        file_name = "lorem_test_file.rtf"
+        expected_error_msg = utils.error_message_write_filetype_invalid(file_name)
+        result = get_target_path_WRITE_secure(working_directory, file_name)
+        self.assertTrue(result == expected_error_msg)
+
+    #Overwrite existing directory
     def test_overwrite_existing_1(self):
         working_directory = "calculator"
         directory = "pkg"
         expected_error_msg = utils.error_message_write_dir_not_allowed(directory)
         result = get_target_path_WRITE_secure(working_directory, directory)
         self.assertTrue(result == expected_error_msg)
-
-    #Overwrite existing directory 2
-    def test_overwrite_existing_2(self):
-        working_directory = "calculator"
-        directory = "pkg"
-        expected_error_msg = utils.error_message_write_dir_not_allowed(directory)
-        result = get_target_path_WRITE_secure(working_directory, directory)
-        self.assertTrue(result == expected_error_msg)
-
-    #Valid path 2 (file)
-    def test_write_not_dir(self):
-        working_directory = "calculator"
-        directory = "main.py"
-        result = get_target_path_WRITE_secure(working_directory, directory)
-        self.assertIsInstance(result, Path)
 
     #Outside working dir 2
     def test_write_outside_work_dir(self):

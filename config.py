@@ -5,6 +5,7 @@ READ_PERMITTED_DIR = "calculator" #Working directory for read operations (permis
 WRITE_PERMITTED_DIR = "calculator" #Working directory for write/execute operations (permission given only for this and its subdirs)
 FORBIDDEN_READ_PATHS = [] #Banned directories for write ops (relative to BASE_DIR)
 FORBIDDEN_WRITE_PATHS = ["functions", ".vscode", ".venv", "__pycache__"] #Banned directories for write ops (relative to BASE_DIR)
+CREATE_PERMITTED_FILE_TYPES = [".txt", ".md"]
 WRITE_PERMITTED_FILE_TYPES = [".txt", ".py", ".md"] #Types of files that can be written by the scripts / LLM
 EXECUTE_PERMITTED_FILE_TYPES = [".py"] #Types of files that can be executed by the scripts / LLM
 MAX_CHARS = 10000 #Max characters before truncation when getting content of a file

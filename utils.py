@@ -1,4 +1,4 @@
-from config import MAX_CHARS, BASE_DIR, WRITE_PERMITTED_FILE_TYPES
+from config import MAX_CHARS, BASE_DIR, WRITE_PERMITTED_FILE_TYPES, CREATE_PERMITTED_FILE_TYPES,EXECUTE_PERMITTED_FILE_TYPES
 from pathlib import Path
 
 HEADER_DIR_RESULT = "Results for '{working_directory}' directory:\n"
@@ -121,9 +121,11 @@ def error_message_write_not_regular_file(target: str):
 def error_message_write_filetype_invalid(target: str):
     return f'Error: "{target}" is not a a permitted file type for write actions - accepted file types are {WRITE_PERMITTED_FILE_TYPES}'
 
+def error_message_create_filetype_invalid(target: str):
+    return f'Error: "{target}" filetype invalid for write when file does not already exist - accepted file types are {CREATE_PERMITTED_FILE_TYPES}'
+
 def error_message_execute_filetype_invalid(target: str):
-    #return f'Error: "{target}" is not a a permitted file type - accepted file types are {PERMITTED_FILE_TYPES}'
-    return f'Error: "{target}" is not a Python file'
+    return f'Error: "{target}" is not a a permitted file type - accepted file types are {EXECUTE_PERMITTED_FILE_TYPES}'
 
 def error_message_execute_file_not_exist(target):
     return f'Error: execution of "{target}" impossible as it does not exist'

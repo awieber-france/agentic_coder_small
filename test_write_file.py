@@ -44,9 +44,25 @@ class test_write_file(unittest.TestCase):
         working_dir, file_path = "calculator", "/tmp/temp.txt"
         content = "this should not be allowed"
         result = write_file(working_dir, file_path, content)
-        expected_msg_header = utils.write_fail_message_to_append()
+        expected_msg = utils.error_message_dir_not_auth(file_path)
         print(result)
-        self.assertEqual(result[-len(expected_msg_header):], expected_msg_header)
+        self.assertEqual(result, expected_msg)
+
+    #Invalid filetype for new file
+    def test_create_invalid_filetype(self):
+        working_directory, file_path = "calculator", "majestic_composter.py"
+        content = "I eat you for lunch."
+        expected_error_msg = utils.error_message_create_filetype_invalid(file_path)
+        result = write_file(working_directory, file_path, content)
+        self.assertTrue(result == expected_error_msg)
+
+    #Invalid filetype for overwrite
+    def test_overwrite_invalid_filetype(self):
+        working_directory, file_path = "calculator", "lorem_test_file.rtf"
+        content = "lorem ipsum overwritten by test"
+        expected_error_msg = utils.error_message_write_filetype_invalid(file_path)
+        result = write_file(working_directory, file_path, content)
+        self.assertTrue(result == expected_error_msg)
 
 if __name__ == "__main__":
     unittest.main()

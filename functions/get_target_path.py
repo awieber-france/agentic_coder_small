@@ -2,7 +2,7 @@ from pathlib import Path
 import utils
 import sys
 import stat
-from config import WRITE_PERMITTED_FILE_TYPES, EXECUTE_PERMITTED_FILE_TYPES
+from config import WRITE_PERMITTED_FILE_TYPES, EXECUTE_PERMITTED_FILE_TYPES, CREATE_PERMITTED_FILE_TYPES
 from get_sandboxed_path import get_sandboxed_READ_path, get_sandboxed_WRITE_path
 
 def get_target_path_READ_secure(working_directory: Path | str, directory: str = ".") -> Path | str:
@@ -50,11 +50,19 @@ def _get_target_path_with_permission_check(working_directory: Path | str, direct
             mode = target_path.stat().st_mode
             if not stat.S_ISREG(mode):
                 return utils.error_message_write_not_regular_file(directory)
-        #Allow only specific filetypes
-        if write and target_path.suffix not in WRITE_PERMITTED_FILE_TYPES:
-            return utils.error_message_execute_filetype_invalid(directory)
+        # Execute only permitted filetypes
         if execute and target_path.suffix not in EXECUTE_PERMITTED_FILE_TYPES:
             return utils.error_message_execute_filetype_invalid(directory)
+        # Execute only permitted filetypes
+        if execute and target_path.suffix in EXECUTE_PERMITTED_FILE_TYPES and not target_path.exists():
+            return utils.error_message_execute_file_not_exist(directory)
+        # Create new file only permitted filetypes
+        if write and not target_path.exists() and target_path.suffix not in CREATE_PERMITTED_FILE_TYPES:
+            return utils.error_message_create_filetype_invalid(directory)
+        # Overwrite file only permitted filetypes
+        if write and target_path.suffix not in WRITE_PERMITTED_FILE_TYPES:
+            return utils.error_message_write_filetype_invalid(directory)
+
     except Exception as e:
         return utils.error_message_generic_with_header(directory, e) # the error generator sanitizes the exception
     return target_path

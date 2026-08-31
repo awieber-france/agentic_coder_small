@@ -1,110 +1,99 @@
 import os
-import json
 import sys
 import argparse
+from time import sleep
 from config import MAX_ITER_AGENT, TEMPERATURE
 from dotenv import load_dotenv
 from openai import OpenAI
 import prompts
 from call_function import available_functions, call_function
 
+MODEL = "openrouter/free"
 
-def main():
-    args = cli_parser()
-
-    #Initialize messages history
-    system_prompt = prompts.system_prompt
-    messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": args.user_prompt}
-        ]
-    
-    #Open chatbot client via API
-    load_dotenv()
-    api_key = os.environ.get("OPENROUTER_API_KEY")
-    if not api_key:
-        raise RuntimeError("OPENROUTER_API_KEY is not set in the .env file in main directory.")
-
-    client = OpenAI(
-        base_url="https://openrouter.ai/api/v1",
-        api_key=api_key,
-    )
-
-    #Print if verbose
-    if args.verbose:
-        print(f"User prompt: {args.user_prompt}")
-
-    #Run agent in loop
-    for _ in range(MAX_ITER_AGENT):
-        messages, job_done = generate_content(client, messages, args.verbose, TEMPERATURE)
-        if job_done:
-            print(messages[-1])
-            sys.exit(0)
-
-    #Failure to finish job, exit with code=1
-    sys.exit(1)
-
+def client_openai(api_key: str) -> OpenAI:
+    return OpenAI(
+                base_url="https://openrouter.ai/api/v1",
+                api_key=api_key,
+                )
 
 def cli_parser():
     parser = argparse.ArgumentParser(description="Chatbot")
     parser.add_argument("user_prompt", type=str, help="User prompt")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
-
-def generate_content(client: OpenAI, messages: list, verbose: bool, temperature: float | None = None) -> None:
-    #Initialize parameters
+def generate_content(client: OpenAI, messages: list, verbose: bool, temperature: float | None = None) -> tuple[list, bool]:
     job_done = False
 
-    #Interact with chatbot
-    response = client.chat.completions.create(
-            model="openrouter/free",
-            messages=messages,
-            temperature = temperature,
-            tools=available_functions,
-        )
-    if not response.usage:
-        api_fail_message = {"role": "API", "content": "The API response appears to be malformed. Please try again."}
-        messages.append(api_fail_message)
+    # Interact with API
+    try:
+        response = client.chat.completions.create(
+                model=MODEL,
+                messages=messages,
+                temperature = temperature,
+                tools=available_functions,
+            )
+    except Exception as e:
         if verbose:
-            print(f'Error: {api_fail_message["content"]}')
+            print(f"API request faile: {e}")
+        api_fail_message = {"role": "user", "content": "[System Error: {e}. Please retry.]"}
+        messages.append(api_fail_message)
         return messages, job_done
-        #raise RuntimeError("API response appears to be malformed.")
+
+    # If API connection succeeds, then continue
     message = response.choices[0].message
-    if message.content is not None:
-        messages.append({"role": "assistant", "content": message.content})
-    else:
-        messages.append({"role": "assistant", "reasoning": message.reasoning})
+    messages.append(message) # Append the raw response object directly to preserve tool_calls and metadata
 
-    #Print results
-    if verbose:
-        prompt_tokens = response.usage.prompt_tokens
-        completion_tokens = response.usage.completion_tokens
-        print(f"Prompt tokens: {prompt_tokens}")
-        print(f"Response tokens: {completion_tokens}")
+    if verbose and response.usage:
+        print(f"Prompt tokens: {response.usage.prompt_tokens}")
+        print(f"Response tokens: {response.usage.completion_tokens}")
 
-    # Run tool calls (if there are any)
-    if message.tool_calls is not None:
+    # Process tool calls if requested
+    if message.tool_calls:
         for tool_call in message.tool_calls:
-            function_args = json.loads(tool_call.function.arguments or"{}")
-            #print(f"Calling function: {tool_call.function.name}({function_args})")
-            result_message = call_function(tool_call, verbose) #already formatted in {'role': 'tool', 'tool_call_id': STR, 'content': STR}
+            result_message = call_function(tool_call, verbose)
             messages.append(result_message)
             if verbose:
-                print(f"-> {result_message['content']}")
-        
-    # If no tool calls, then append final LLM message into messages history and end agentic job
+                print(f"-> {result_message.get('content')}")
     else:
-        print("Response:")
-        print(message.content)
-        messages.append({"role": "assistant", "content": message.content})
+        # No tool calls indicates completion
+        if verbose:
+            print(f"Response:\n{message.content}")
         job_done = True
 
     return messages, job_done
 
+def main():
+    #Open chatbot client via API
+    load_dotenv()
+    api_key = os.environ.get("OPENROUTER_API_KEY")
+    if not api_key:
+        raise RuntimeError("OPENROUTER_API_KEY is not set in the .env file in main directory.")
+    client = client_openai(api_key)
     
+    #Initialize messages history
+    args = cli_parser()
+    messages = [
+            {"role": "system", "content": prompts.system_prompt},
+            {"role": "user", "content": args.user_prompt}
+        ]
+    
+    #Print if verbose
+    if args.verbose:
+        print(f"User prompt: {args.user_prompt}")   
 
+    #Run agent in loop
+    for _ in range(MAX_ITER_AGENT):
+        messages, job_done = generate_content(client, messages, args.verbose, TEMPERATURE)
+        if job_done:
+            final_message = messages[-1]
+            final_text = getattr(final_message, "content", str(final_message))
+            print(final_text)
+            sys.exit(0) 
+
+    #Failure to finish job, exit with code=1
+    print("Agent reached maximumum iterations without finishing.")
+    sys.exit(1)
 
 if __name__ == "__main__":
     main()

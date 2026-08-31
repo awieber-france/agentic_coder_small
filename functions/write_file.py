@@ -31,7 +31,7 @@ def write_file(working_directory: str, file_path: str, content: str) -> str:
     target_path = get_target_path_WRITE_secure(working_directory, file_path)
     # If text, then it is an error message
     if isinstance(target_path, str):
-        return utils.error_message_write_fail(target_path)
+        return target_path #utils.error_message_write_fail(target_path)
     # A correct target path is in the Path format
     if not isinstance(target_path, Path):
         return utils.error_message_bad_path_object(working_directory)
