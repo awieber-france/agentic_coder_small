@@ -57,8 +57,6 @@ class test_write_file(unittest.TestCase):
         content = "lorem ipsum overwritten by test"
         expected_error_msg = utils.error_message_write_filetype_invalid(file_path)
         result = write_file(working_directory, file_path, content)
-        print(result)
-        print(expected_error_msg)
         self.assertTrue(result == expected_error_msg)
 
 if __name__ == "__main__":

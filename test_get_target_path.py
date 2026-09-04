@@ -87,8 +87,6 @@ class testTargetDir(unittest.TestCase):
         file_name = "lorem_test_file.rtf"
         expected_error_msg = utils.error_message_write_filetype_invalid(file_name)
         result = get_target_path_WRITE_secure(working_directory, file_name)
-        print(result)
-        print(expected_error_msg)
         self.assertTrue(result == expected_error_msg)
 
     #Overwrite existing directory
