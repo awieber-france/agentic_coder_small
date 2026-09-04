@@ -1,4 +1,13 @@
-# calculator/main.py
+"""
+Calculator called via the terminal:
+    python main.py "<expression>"
+
+Only very simple mathematical expressions are accepted (spaces between numbers and no parentheses)
+
+Calls the calculator script stored in the 'pkg' directory (all math logic is there)
+
+Prints result in json format.
+"""
 
 import sys
 from pkg.calculator import Calculator

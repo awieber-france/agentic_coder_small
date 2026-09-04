@@ -1,5 +1,8 @@
-import json
+"""
+Provides output to print in a json format.
+"""
 
+import json
 
 def format_json_output(expression: str, result: float, indent: int = 2) -> str:
     #Supply integer result (if applicable)

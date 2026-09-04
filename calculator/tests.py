@@ -1,5 +1,8 @@
 
-# calculator/tests.py
+"""
+Calculator tests
+Not fully implemented as unitests in git or VS Code (the agent can run it to see if the changes it makes are ok)
+"""
 
 import unittest
 from pkg.calculator import Calculator

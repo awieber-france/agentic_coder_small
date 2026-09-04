@@ -1,3 +1,10 @@
+"""
+Standard project error messages retrieved upon failures
+Contains all useful information for the LLM to correct its next tool call
+Sanitization function used to remove full paths (replaced with relative paths)
+"""
+
+
 from settings import MAX_CHARS, BASE_DIR, WRITE_PERMITTED_FILE_TYPES, CREATE_PERMITTED_FILE_TYPES,EXECUTE_PERMITTED_FILE_TYPES
 from pathlib import Path
 
@@ -25,6 +32,7 @@ header_template_FILE = "Results for '{target_directory}' file:\n"
 header_template_GENERIC = "Results for '{target_directory}':\n"
 
 def get_header(target: str, type: str) -> str:
+    """Quick retrieval of standard headers for error messages."""
     if type == "DIR":
         return header_template_DIR.format(target_directory=target)
     elif type == "FILE":
@@ -32,7 +40,7 @@ def get_header(target: str, type: str) -> str:
     else:
         return header_template_GENERIC.format(target_directory=target)
 
-#WRITE failure message to append
+#WRITE failure message to append (not best approach, but barely used)
 def write_fail_message_to_append():
     return " - write attempt failed"
 

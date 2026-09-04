@@ -1,3 +1,14 @@
+"""
+Checks the path requested by the agent and returns a Path object if valid.
+Returns either a Path or string (error message).
+
+Read, write, overwrite, and execute are evaluated based on access priveledges provided in settings.py
+NOTE: execute uses write priveledges to evaluate the target path (more conservative)
+
+Checks for existance, is_dir, file type, position relative to project directory, and the presence of symlinks.
+"""
+
+
 from pathlib import Path
 from util import utils
 import sys
@@ -6,12 +17,15 @@ from settings import WRITE_PERMITTED_FILE_TYPES, EXECUTE_PERMITTED_FILE_TYPES, C
 from functions.get_sandboxed_path import get_sandboxed_READ_path, get_sandboxed_WRITE_path
 
 def get_target_path_READ_secure(working_directory: Path | str, directory: str = ".") -> Path | str:
+    """Launches _get_target_path_with_permission_check with the proper parameters"""
     return _get_target_path_with_permission_check(working_directory, directory, write=False)
 
 def get_target_path_WRITE_secure(working_directory: Path | str, directory: str = ".") -> Path | str:
+    """Launches _get_target_path_with_permission_check with the proper parameters"""
     return _get_target_path_with_permission_check(working_directory, directory, write=True)
 
 def get_target_path_EXECUTE_secure(working_directory: Path | str, directory: str = ".") -> Path | str:
+    """Launches _get_target_path_with_permission_check with the proper parameters"""
     return _get_target_path_with_permission_check(working_directory, directory, write=True, execute=True)
 
 def _get_target_path_with_permission_check(working_directory: Path | str, directory: str = ".", write: bool = False, execute: bool = False) -> Path | str:

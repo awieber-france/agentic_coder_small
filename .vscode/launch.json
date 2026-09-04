@@ -71,6 +71,18 @@
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"
             }
+        },
+        {
+            "name": "Debugger for get_sandboxed_path.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/functions/get_sandboxed_path.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "args": ["True"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
         }
     ]
 }

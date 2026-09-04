@@ -1,4 +1,7 @@
-# calculator/pkg/calculator.py
+"""
+Evaluation of simple mathematical expressions supplied as strings.
+Does multiplication, division, addition, and subtraction without parentheses
+"""
 
 from collections.abc import Callable
 

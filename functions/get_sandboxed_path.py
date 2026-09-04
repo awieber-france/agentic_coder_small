@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 from settings import BASE_DIR, READ_PERMITTED_DIR, WRITE_PERMITTED_DIR, FORBIDDEN_READ_PATHS, FORBIDDEN_WRITE_PATHS
 
 # NOT GUARANTEED TO BE SANDBOXED. PYTHON IS NOT SECURE FOR THIS, BUT THIS IS A CASE STUDY. BEST ATTEMPT MADE TO SECURE IT.
@@ -33,7 +34,7 @@ def _validate_permitted_dir(permitted_dir_name: str, forbidden_dirs: list[str], 
     # 5. Check structural boundary containment (within project workspace)
     if not target_path.is_relative_to(base_path):
         raise PermissionError(f"Error: permitted path '{target_path}' is outside project workspace.")
-    # 6. Ensure that target path is never the base path (for write_path)
+    # 6. Ensure that target path is never the base path (for write_path) - FIRST CONDITION TO ELIMINATE?
     if disallow_base and target_path == base_path:
         raise PermissionError("Error: write access to the project root is forbidden.")
     # 7. Ensure target_path does not overlap with any forbidden directory
@@ -46,7 +47,24 @@ def _validate_permitted_dir(permitted_dir_name: str, forbidden_dirs: list[str], 
     return target_path
 
 def get_sandboxed_READ_path() -> Path:
-    return _validate_permitted_dir(READ_PERMITTED_DIR, FORBIDDEN_READ_PATHS, disallow_base=False)
+    return _validate_permitted_dir(READ_PERMITTED_DIR, FORBIDDEN_READ_PATHS, disallow_base=True)
 
 def get_sandboxed_WRITE_path() -> Path:
     return _validate_permitted_dir(WRITE_PERMITTED_DIR, FORBIDDEN_WRITE_PATHS, disallow_base=True)
+
+
+if __name__ == "__main__":
+    #Get raw string argument from launch.json debugger
+    raw_arg = sys.argv[1] if len(sys.argv) > 1 else "False"
+    #Check for values that should count as "True"
+    run_debug = raw_arg.lower() in ("true", "yes", "oui", "t", "1")
+
+    #Run debugger
+    if run_debug is True:
+        print("\nRunning get_sandboxed_READ_path:\n")
+        result = get_sandboxed_READ_path()
+        print(result)
+
+        print("\nRunning get_sandboxed_WRITE_path:\n")
+        result = get_sandboxed_WRITE_path()
+        print(result)

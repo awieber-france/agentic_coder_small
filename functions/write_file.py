@@ -1,3 +1,9 @@
+"""
+File writing tool called by agent.
+Overwrites or creates new files within the permitted directory provided by get_sandboxed_WRITE_path.
+"""
+
+
 from pathlib import Path
 from functions.get_target_path import get_target_path_WRITE_secure
 from functions.get_sandboxed_path import get_sandboxed_WRITE_path, _get_sandboxed_BASE_path
@@ -27,6 +33,10 @@ schema_write_file = {
 }
 
 def write_file(working_directory: str, file_path: str, content: str) -> str:
+    """
+    Writes file (checking that target path is authorized).
+    Returns a string message with success or error description.
+    """
     # WRITE PRIVELEDGES
     target_path = get_target_path_WRITE_secure(working_directory, file_path)
     # If text, then it is an error message
@@ -51,21 +61,25 @@ def write_file(working_directory: str, file_path: str, content: str) -> str:
          return utils.error_message_generic(e) #the error generator sanitizes the exception
 
 if __name__ == "__main__":
+    """USED ONLY WITH DEBUGGER"""
+    # Parameters to feed to function being tested
     work_dir = "calculator"
     file_paths = ["lorem_test.txt",
-                  "pkg/morelorem.txt",
-                  "/tmp/temp.txt"]
+                "pkg/morelorem.txt",
+                "/tmp/temp.txt"]
     content = ["wait, this isn't lorem ipsum (written directly from the in debugging mode)",
-               "lorem ipsum dolor sit amet (written directly from the in debugging mode)",
-               "this should not be allowed (written directly from the in debugging mode)"]
+            "lorem ipsum dolor sit amet (written directly from the in debugging mode)",
+            "this should not be allowed (written directly from the in debugging mode)"]
 
-    #Get raw string argument from launch.json debugger
+    # Get raw string argument from launch.json debugger
     raw_arg = sys.argv[1] if len(sys.argv) > 1 else "False"
     #Check for values that should count as "True"
     run_cases = raw_arg.lower() in ("true", "yes", "oui", "t", "1")
 
-    #Run debugger
+    # Run debugger
     if run_cases is True: 
+
+    
         for file_path, content in zip(file_paths, content):
             result = write_file(work_dir, file_path, content)
             print(result)

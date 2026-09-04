@@ -1,3 +1,8 @@
+"""
+File execution tool called by agent.
+Runs permitted Python scripts.
+"""
+
 from util import utils
 from settings import SUBPROC_TIMEOUT
 from pathlib import Path
@@ -29,6 +34,10 @@ schema_run_python_file = {
 
 #Executing a file requires write priveledges
 def run_python_file(working_directory: str, file_path: str, args: list[str] | None = None) -> str:
+    """
+    Executes file (checking that file path is authorized).
+    Returns a string message with success or error description.
+    """
     try:
         #Get target path checked for permissions
         target_path = get_target_path_EXECUTE_secure(working_directory, file_path)
@@ -67,7 +76,8 @@ def run_python_file(working_directory: str, file_path: str, args: list[str] | No
     #EXTEND PYTHON CALL WITH EXTRA ARGUMENTS IF INCLUDED
 
 if __name__ == "__main__":
-    #All cases to test:
+    """USED ONLY WITH DEBUGGER"""
+    # Parameters to feed to function being tested
     arg_combos = [["calculator", "tests.py"],
                 ["calculator", "main.py"],
                 ["calculator", "main.py", ["3 + 5"]],

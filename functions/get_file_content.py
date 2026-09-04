@@ -1,3 +1,7 @@
+"""
+Tool that reads a file and sends content as string (truncation applied, see setting.py) to the agent.
+"""
+
 import sys
 from pathlib import Path
 from util import utils
@@ -27,6 +31,7 @@ schema_get_file_content = {
 }
 
 def get_file_content(working_directory: str, file_path: str, MAX_CHARS: int = MAX_CHARS) -> str:
+    """Reads the file at file_path, checking for permission first"""
     # READ ONLY PRIVELEDGES
     target_path = get_target_path_READ_secure(working_directory, file_path)
     if isinstance(target_path, str):

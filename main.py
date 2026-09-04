@@ -1,3 +1,13 @@
+"""
+Launches an agentic AI. It is called via a command line interface (CLI) that takes a user prompt as the first and only argument. Verbose mode can be called through the CLI as well.
+Launch the agent via the terminal (at root of project, with python env activated):
+    python main.py [user_prompt] [--verbose]
+
+Tools used by the AI are defined in functions.call_function.py. They manage read, write and execute operations on the machine.
+See settings.py for the constraints applied to these operations and the agent.
+"""
+
+
 import os
 import sys
 import argparse
@@ -6,9 +16,8 @@ from settings import MAX_ITER_AGENT, TEMPERATURE
 from dotenv import load_dotenv
 from openai import OpenAI
 from util import prompts
+from settings import MODEL
 from functions.call_function import available_functions, call_function
-
-MODEL = "openrouter/free"
 
 def client_openai(api_key: str) -> OpenAI:
     return OpenAI(
@@ -17,12 +26,19 @@ def client_openai(api_key: str) -> OpenAI:
                 )
 
 def cli_parser():
+    """
+    Reads the input from the command line and transforms it into arguments
+    """
     parser = argparse.ArgumentParser(description="Chatbot")
     parser.add_argument("user_prompt", type=str, help="User prompt")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     return parser.parse_args()
 
 def generate_content(client: OpenAI, messages: list, verbose: bool, temperature: float | None = None) -> tuple[list, bool]:
+    """
+    Calls the LLM and gives access to tool calls
+    Output: latest messages from LLM and job status
+    """
     job_done = False
 
     # Interact with API
@@ -64,6 +80,11 @@ def generate_content(client: OpenAI, messages: list, verbose: bool, temperature:
     return messages, job_done
 
 def main():
+    """
+    Launches LLM client and runs it through a loop, with message history updated at end of each loop.
+    When iteration limit reached, a sys error is provided.
+    Early exit if final result achieved before iteration limit.
+    """
     #Open chatbot client via API
     load_dotenv()
     api_key = os.environ.get("OPENROUTER_API_KEY")

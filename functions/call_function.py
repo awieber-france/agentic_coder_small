@@ -1,3 +1,7 @@
+"""
+Runs the functions called by the agent via its tool calls.
+"""
+
 import json
 from util import utils
 from collections.abc import Callable
@@ -15,6 +19,10 @@ available_functions = [
 ]
 
 def call_function(tool_call, verbose: bool = False) -> dict:
+    """
+    Runs a tool if the LLM provided the proper call.
+    The permitted working directory is given here and depends on if the tool is read or write (execute is considered 'write')
+    """
     try:
         function_name = tool_call.function.name
         function_args = json.loads(tool_call.function.arguments or "{}")

@@ -1,3 +1,7 @@
+"""
+Directory read tool that provides the content of the target directory (file name, file size, is_dir)
+"""
+
 import sys
 from pathlib import Path
 from util import utils
@@ -24,6 +28,7 @@ schema_get_files_info = {
 
 # Collect information on files withing the target directory (name, size, is_dir)
 def get_files_info(working_directory: str | Path, directory: str = ".") -> str:
+    """Gets contents of the directory, checking permissions first"""
     # GET TARGET PATH (checking for permissions)
     target_path = get_target_path_READ_secure(working_directory, directory)
     # A string is an error message, a Path object is a valid target_path
