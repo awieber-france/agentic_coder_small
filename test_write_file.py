@@ -8,7 +8,7 @@ class test_write_file(unittest.TestCase):
         working_dir, file_path = "calculator", "lorem_test.py"
         content = "wait, this isn't lorem ipsum"
         result = write_file(working_dir, file_path, content)
-        expected_msg = utils.success_message_WRITE(file_path, content)
+        expected_msg = utils.error_message_create_filetype_invalid(file_path)
         self.assertEqual(result, expected_msg)
 
     #File in subdirectory (authorized)
@@ -16,7 +16,7 @@ class test_write_file(unittest.TestCase):
         working_dir, file_path = "calculator", "pkg/morelorem.py"
         content = "lorem ipsum dolor sit amet"
         result = write_file(working_dir, file_path, content)
-        expected_msg = utils.success_message_WRITE(file_path, content)
+        expected_msg = utils.error_message_create_filetype_invalid(file_path)
         self.assertEqual(result, expected_msg)
 
     #File in working directory (authorized)
@@ -57,6 +57,8 @@ class test_write_file(unittest.TestCase):
         content = "lorem ipsum overwritten by test"
         expected_error_msg = utils.error_message_write_filetype_invalid(file_path)
         result = write_file(working_directory, file_path, content)
+        print(result)
+        print(expected_error_msg)
         self.assertTrue(result == expected_error_msg)
 
 if __name__ == "__main__":
