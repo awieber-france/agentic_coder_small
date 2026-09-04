@@ -1,5 +1,5 @@
 import unittest
-import utils
+from util import utils
 from functions.write_file import write_file
 
 class test_write_file(unittest.TestCase):

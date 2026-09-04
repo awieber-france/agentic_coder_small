@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-import utils
+from util import utils
 from config import MAX_CHARS
 from functions.get_target_path import get_target_path_READ_secure
 

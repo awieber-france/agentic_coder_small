@@ -1,5 +1,5 @@
 import unittest
-import utils
+from util import utils
 from functions.run_python_file import run_python_file 
 
 class test_run_python_file(unittest.TestCase):

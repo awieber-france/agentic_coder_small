@@ -1,6 +1,6 @@
 import unittest
 import re
-import utils
+from util import utils
 from functions.get_files_info import get_files_info
 
 class testAccessRights(unittest.TestCase):

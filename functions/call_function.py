@@ -1,5 +1,5 @@
 import json
-import utils
+from util import utils
 from collections.abc import Callable
 from config import WRITE_PERMITTED_DIR, READ_PERMITTED_DIR
 from functions.get_files_info import schema_get_files_info, get_files_info

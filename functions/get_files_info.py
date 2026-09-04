@@ -1,8 +1,8 @@
 import sys
 from pathlib import Path
-import utils
+from util import utils
 from functions.get_target_path import get_target_path_READ_secure
-from get_sandboxed_path import get_sandboxed_READ_path
+from functions.get_sandboxed_path import get_sandboxed_READ_path
 
 #LLM schema - the undeclared working_directory parameter is reserved for the programmer
 schema_get_files_info = {

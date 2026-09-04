@@ -1,6 +1,6 @@
 #Test functions in get_sandboxed_path.py
 import unittest
-import utils
+from util import utils
 from pathlib import Path
 from functions.get_target_path import get_target_path_READ_secure, get_target_path_WRITE_secure
 

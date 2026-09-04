@@ -1,5 +1,5 @@
 import unittest
-import utils
+from util import utils
 from functions.get_file_content import get_file_content
 from config import MAX_CHARS
 

@@ -1,9 +1,9 @@
 from pathlib import Path
-import utils
+from util import utils
 import sys
 import stat
 from config import WRITE_PERMITTED_FILE_TYPES, EXECUTE_PERMITTED_FILE_TYPES, CREATE_PERMITTED_FILE_TYPES
-from get_sandboxed_path import get_sandboxed_READ_path, get_sandboxed_WRITE_path
+from functions.get_sandboxed_path import get_sandboxed_READ_path, get_sandboxed_WRITE_path
 
 def get_target_path_READ_secure(working_directory: Path | str, directory: str = ".") -> Path | str:
     return _get_target_path_with_permission_check(working_directory, directory, write=False)

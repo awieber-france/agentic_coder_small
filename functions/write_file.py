@@ -1,7 +1,7 @@
 from pathlib import Path
 from functions.get_target_path import get_target_path_WRITE_secure
-from get_sandboxed_path import get_sandboxed_WRITE_path, _get_sandboxed_BASE_path
-import utils
+from functions.get_sandboxed_path import get_sandboxed_WRITE_path, _get_sandboxed_BASE_path
+from util import utils
 import sys
 
 #LLM schema - the undeclared working_directory parameter is reserved for the programmer

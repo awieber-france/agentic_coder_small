@@ -5,8 +5,8 @@ from time import sleep
 from config import MAX_ITER_AGENT, TEMPERATURE
 from dotenv import load_dotenv
 from openai import OpenAI
-import prompts
-from call_function import available_functions, call_function
+from util import prompts
+from functions.call_function import available_functions, call_function
 
 MODEL = "openrouter/free"
 
