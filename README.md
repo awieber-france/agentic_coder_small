@@ -18,9 +18,30 @@ Priveledges provided to the AI Agent are:
 - **Write new file:** project subdirectory, file types {.txt, .md}
 - **Run executable:** project subdirectory, file types {.py}
 
-Since it can modify executables (python files within the project subdirectory, this agent is dangerous)
+The project subdirectory is set to ***'Calculator'***.
 
-NOTA: The project subdirectory is set to 'Calculator'.
+Since the agent can modify executables (python files within the project subdirectory, it is dangerous)
+
+The following is verified during working directory validation:
+- No symlinks
+- The path is a Path object from pathlib (always resolved)
+- The working directory is relative to the project directory
+- The working directory is relative to the *permitted* working directory as defined in *settings.py*
+- Write operations are not performed on a directory
+- File is of permitted file type
+
+## Suggested test case
+**Quick test:**
+
+Run the agent via the following command:
+- python main.py "Does the calculator in this project give the correct answer for '3 + 4 * 2'?"
+
+**Testing of code correction capabilities:**
+
+Perform the following steps:
+- modify the *calculator/pkg/calculator.py* code so that the '+' operation has a precedence of 3.
+- run the agent via the following command:
+   - python main.py "The calculator in this project gives me the wrong result for '3 + 4 * 2. Please diagnose and correct the problem. Tell me what was wrong, what you did, and what the final result is after the fixes."
 
 ## Requirements
 
