@@ -53,6 +53,6 @@ Perform the following steps:
 
 ## Requirements
 
-The environment manager ***uv*** was used to create and run the project. All dependencies are saved in the requirements.txt file.
+The environment manager ***uv*** was used to create and run the project. The uv.lock file should be used to build the environment. However, all dependencies installed via uv have also been exported into a requirements.txt file.
 
 **Python version tested:** 3.11.5
