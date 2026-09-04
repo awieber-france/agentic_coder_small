@@ -13,9 +13,6 @@ class testFileContent(unittest.TestCase):
         result_header = utils.get_header(file, "FILE")
         header_length = len(result_header)
         content_length = len(result) - header_length
-        # Print results
-        print(f"Header length: {header_length}")
-        print(f"{file} length: {content_length}")
         # Assert
         self.assertTrue(content_length > 0 and result.startswith(result_header))
 
@@ -27,8 +24,6 @@ class testFileContent(unittest.TestCase):
         # Get truncation messages
         trunc_msg = utils.truncate_message(file, MAX_CHARS)
         result_end = result[-len(trunc_msg):]
-        # Print results
-        print(result)
         # Assert
         self.assertEqual(result_end, trunc_msg)
 
@@ -41,8 +36,6 @@ class testFileContent(unittest.TestCase):
         result_header = utils.get_header(file, "FILE")
         header_length = len(result_header)
         content_length = len(result) - header_length
-        # Print results
-        print(result)
         # Assert
         self.assertTrue(content_length > 0 and result.startswith(result_header))
 
@@ -54,8 +47,6 @@ class testFileContent(unittest.TestCase):
         result_header = utils.get_header(file, "FILE")
         header_length = len(result_header)
         content_length = len(result) - header_length
-        # Print results
-        print(result)
         # Assert
         self.assertTrue(content_length > 0 and result.startswith(result_header))
 
@@ -63,8 +54,6 @@ class testFileContent(unittest.TestCase):
         # Get output of file read
         working_dir, file = "calculator", "/bin/cat"
         result = get_file_content(working_dir, file)
-        # Print results
-        print(result)
         # Assert error message
         expected_error_msg = utils.error_message_dir_not_auth(file)
         self.assertEqual(result, expected_error_msg)
@@ -73,8 +62,6 @@ class testFileContent(unittest.TestCase):
         # Get output of file read
         working_dir, file = "calculator", "pkg/does_not_exist.py"
         result = get_file_content(working_dir, file)
-        # Print results
-        print(result)
         # Assert error message
         expected_error_msg_header = utils.error_message_generic_with_header(file, "")
         self.assertTrue(result.startswith(expected_error_msg_header))

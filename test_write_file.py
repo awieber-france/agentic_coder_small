@@ -9,7 +9,6 @@ class test_write_file(unittest.TestCase):
         content = "wait, this isn't lorem ipsum"
         result = write_file(working_dir, file_path, content)
         expected_msg = utils.success_message_WRITE(file_path, content)
-        print(result)
         self.assertEqual(result, expected_msg)
 
     #File in subdirectory (authorized)
@@ -18,7 +17,6 @@ class test_write_file(unittest.TestCase):
         content = "lorem ipsum dolor sit amet"
         result = write_file(working_dir, file_path, content)
         expected_msg = utils.success_message_WRITE(file_path, content)
-        print(result)
         self.assertEqual(result, expected_msg)
 
     #File in working directory (authorized)
@@ -27,7 +25,6 @@ class test_write_file(unittest.TestCase):
         content = "wait, this isn't lorem ipsum"
         result = write_file(working_dir, file_path, content)
         expected_msg = utils.success_message_WRITE(file_path, content)
-        print(result)
         self.assertEqual(result, expected_msg)
 
     #File in subdirectory (authorized)
@@ -36,7 +33,6 @@ class test_write_file(unittest.TestCase):
         content = "lorem ipsum dolor sit amet"
         result = write_file(working_dir, file_path, content)
         expected_msg = utils.success_message_WRITE(file_path, content)
-        print(result)
         self.assertEqual(result, expected_msg)
 
     #File in unauthorized directory
@@ -45,7 +41,6 @@ class test_write_file(unittest.TestCase):
         content = "this should not be allowed"
         result = write_file(working_dir, file_path, content)
         expected_msg = utils.error_message_dir_not_auth(file_path)
-        print(result)
         self.assertEqual(result, expected_msg)
 
     #Invalid filetype for new file
