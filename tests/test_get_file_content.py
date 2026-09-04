@@ -26,7 +26,6 @@ class testFileContent(unittest.TestCase):
         result_end = result[-len(trunc_msg):]
         # Assert
         self.assertEqual(result_end, trunc_msg)
-        self.assertEqual(1, 2)
 
     # Ensure calculator file has content and that response is not an error
     def test_calculator_file(self):
