@@ -30,7 +30,9 @@ The following is verified during working directory validation:
 - Write operations are not performed on a directory
 - File is of permitted file type
 
-## Suggested test case
+## Suggested test cases
+After setting up the environment, first run the unittests to see if the setup is working. Then attempt the following commands from within the terminal in the project directory.
+
 **Quick test:**
 
 Run the agent via the following command:
