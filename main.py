@@ -2,7 +2,7 @@ import os
 import sys
 import argparse
 from time import sleep
-from config import MAX_ITER_AGENT, TEMPERATURE
+from settings import MAX_ITER_AGENT, TEMPERATURE
 from dotenv import load_dotenv
 from openai import OpenAI
 from util import prompts

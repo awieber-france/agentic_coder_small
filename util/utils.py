@@ -1,4 +1,4 @@
-from config import MAX_CHARS, BASE_DIR, WRITE_PERMITTED_FILE_TYPES, CREATE_PERMITTED_FILE_TYPES,EXECUTE_PERMITTED_FILE_TYPES
+from settings import MAX_CHARS, BASE_DIR, WRITE_PERMITTED_FILE_TYPES, CREATE_PERMITTED_FILE_TYPES,EXECUTE_PERMITTED_FILE_TYPES
 from pathlib import Path
 
 def sanitize_exception(exc: Exception, workspace_root: str | Path) -> str:

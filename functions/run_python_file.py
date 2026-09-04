@@ -1,5 +1,5 @@
 from util import utils
-from config import SUBPROC_TIMEOUT
+from settings import SUBPROC_TIMEOUT
 from pathlib import Path
 import subprocess
 import sys

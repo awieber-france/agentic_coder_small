@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 from util import utils
-from config import MAX_CHARS
+from settings import MAX_CHARS
 from functions.get_target_path import get_target_path_READ_secure
 
 #LLM schema - the undeclared working_directory parameter is reserved for the programmer

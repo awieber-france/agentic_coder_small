@@ -1,7 +1,7 @@
 import unittest
 from util import utils
 from functions.get_file_content import get_file_content
-from config import MAX_CHARS
+from settings import MAX_CHARS
 
 class testFileContent(unittest.TestCase):
     # Ensure lorem file has content and that response is not an error (check for proper header)
