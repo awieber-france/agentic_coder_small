@@ -39,7 +39,6 @@ class testAccessRights(unittest.TestCase):
         working_dir, dir = "calculator", "main.py"
         result = get_files_info(working_dir, dir)
         expected_error_msg = utils.error_message_not_dir(dir)
-        print(result)
         self.assertEqual(result, expected_error_msg)
     def test_symlink(self):
         working_dir, dir = "calculator", "pkg -> /etc"
