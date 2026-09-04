@@ -10,6 +10,12 @@ The agent can also respond to questions without using any read/write/execute too
 
 NOTE: The calculator is Python code that takes simple arithmetic equations supplied as a string (ex: 4 + 3 * 20 - 1 / 2). This is executed through a command line interface (CLI) where the first argument is the mathematical equation. Parentheses are not accepted.
 
+## Tools provided to the AI agent
+- **get_files_info:** returns list of directory contents (item names, sizes, and is_dir status)
+- **get_file_content:** reads the contents of a file
+- **run_python_file:** executes a .py file
+- **write_file:** writes a file
+
 ## Details of AI priveledges
 
 Priveledges provided to the AI Agent are:
