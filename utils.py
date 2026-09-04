@@ -1,9 +1,6 @@
 from config import MAX_CHARS, BASE_DIR, WRITE_PERMITTED_FILE_TYPES, CREATE_PERMITTED_FILE_TYPES,EXECUTE_PERMITTED_FILE_TYPES
 from pathlib import Path
 
-HEADER_DIR_RESULT = "Results for '{working_directory}' directory:\n"
-HEADER_FILE_RESULT = "Contents of file '{file_path}':\n"
-
 def sanitize_exception(exc: Exception, workspace_root: str | Path) -> str:
     """Replaces absolute workspace path in exception strings with relative paths."""
     try:
@@ -21,16 +18,6 @@ def sanitize_exception(exc: Exception, workspace_root: str | Path) -> str:
     except:
         return unknown_path_error()
     return error_str
-
-# Usage Example:
-# Input:  [Errno 2] No such file or directory: '/Users/jsmith/Documents/.../calculator/pkg/does_not_exist.py'
-# Output: [Errno 2] No such file or directory: './calculator/pkg/does_not_exist.py'
-
-def format_header_dir(working_directory):
-    return HEADER_DIR_RESULT.format(working_directory=working_directory)
-
-def format_header_file(file_path):
-    return HEADER_FILE_RESULT.format(file_path=file_path)
 
 #HEADER for messages (success or error)
 header_template_DIR = "Results for '{target_directory}' directory:\n"
